@@ -1,27 +1,21 @@
 <?php
+class Database {
+private $host = "localhost";
+private $db_name = "mesmtf";
+private $username = "root";
+private $password = "";
+public $conn;
 
-declare(strict_types=1);
-//starting the session snd puting some cookies in the user mouth
-if (session_status() === PHP_SESSION_NONE) {
-    session_start([
-        'cookie_httponly' => true,
-        'cookie_samesite' => 'Lax',
-    ]);
+public function getConnection() {
+$this->conn = null;
+try {
+$this ->conn = new PDO ("mysql: host= " . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+$this->conn->exec("set names utf8");
+$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $exception) {
+echo "Connection error: " . $exception->getMessage();
 }
-
-//function PDO
-function pdo() : PDO {
-    static $pdo = null;
-    if($pdo)return $pdo;
-    $dbHost = 'localhost';
-    $dbName = 'mesmtf';
-    $dbUser = 'root';
-    $dbPass = '';
-    $dsn= "mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4";
-    $pdo = new PDO($dsn,$dbUser,$dbPass,[
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ]);
-    return $pdo;
+return $this->conn;
 }
+}
+?>
