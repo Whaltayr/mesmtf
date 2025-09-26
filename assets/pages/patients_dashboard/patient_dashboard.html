@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard</title>
+  <style>
+	margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background:   #f5f5f4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/*  Heading  */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #C6C7EB;
+  padding: 10px 20px;
+  border-bottom: 2px solid #003366;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 80px;
+  height: 50px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #003366;
+}
+
+.header p {
+  font-size: 12px;
+  color: #666;
+}
+
+.logout {
+  text-decoration: none;
+  background: #003366;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/*  Sidebar */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 200px;
+  height: calc(100% - 120px);
+  background:     #C6C7EB;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar img {
+  width: 30px;
+  height: 30px;
+	
+}
+
+.sidebar .profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #003366;
+}
+
+/*  Dashboard  */
+.dashboard {
+  margin-left: 220px;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  overflow: hidden;
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.patient-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.patient-list img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.see-all {
+  padding: 8px 14px;
+  background: #002953;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/*  Footer  */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: #979AEF;
+  color: #020202;
+  font-size: 14px;
+}
+
+/* Page Responses  */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .dashboard {
+    margin-left: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- HEADER  -->
+  <header class="header">
+    <div class="header-left">
+      <img src="file:///C|/Users/user/Downloads/333-3336215_ministry-of-agriculture-water-and-forestry-namibia-republic-of-namibia-removebg-preview.png" alt="Namibia Logo" class="logo">
+      <div>
+        <h1>MHSS</h1>
+        <h4>Patient's Dashboard</h4>
+      </div>
+    </div>
+    <a href="#" class="logout">Log Out</a>
+  </header>
+
+  <!--  SIDE BAR NAVIGATION -->
+  <aside class="sidebar">
+    <ul>
+      <li><a href="file:///C|/Lingua/YEAR 2/Semester 2/IT Programming Competition/Web Pages/patient/home"><img src="file:///C|/Users/user/Downloads/home.png" alt="Home"></a></li>
+      <li><a href="#"><img src="file:///C|/Users/user/Downloads/bell.png" alt="Notifications"></a></li>
+      <li><a href="#"><img src="file:///C|/Users/user/Downloads/search.png" alt="Search"></a></li>
+      <li><a href="#"><img src="file:///C|/Users/user/Downloads/setting.png" alt="Settings"></a></li>
+      <li class="profile">
+        <img src="file:///C|/Users/user/Downloads/Doctor.jpg" alt="Doctor">
+      </li>
+    </ul>
+  </aside>
+
+  <!--  MAIN DASHBOARD  -->
+  <main class="dashboard">
+
+    <section class="card large">
+      <h3>Prescriptions</h3>
+      <img src="file:///C|/Users/user/Downloads/Med.jpeg" alt="Prescriptions">
+    </section>
+
+    <section class="card medium">
+      <h3>Medical Records</h3>
+      <img src="file:///C|/Users/user/Downloads/Medical Records.jpg" alt="Medical Records">
+    </section>
+
+    <section class="card small">
+      <h3>Appointments</h3>
+      <img src="file:///C|/Users/user/Downloads/360_F_358011534_JRXKO7GvJWLhk38sy4NkSXU0mLBx3ovC.jpg" alt="Appointments">
+    </section>
+
+    <section class="card small">
+      <h3>Calendar</h3>
+      <img src="file:///C|/Users/user/Downloads/Calander.jpg" alt="Calendar"> 
+    </section>
+	  
+	  <section class="card small">
+      <h3>Messages</h3>
+      <img src="file:///C|/Users/user/Downloads/Messages pictures.jpg" alt="Messages">
+    </section>
+  </main>
+
+  <!--  FOOTER  -->
+  <footer class="footer">
+    <p>Ministry of Health &amp; Social Services © 2025 | Patient Dashboard</p>
+  </footer>
+
+</body>
+</html>

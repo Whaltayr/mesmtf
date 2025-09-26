@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
-// Always start session here so CSRF works both in UI and API includes
+// starting the session so the csrf works fine
 if (session_status() === PHP_SESSION_NONE) {
     session_start([
         'cookie_httponly' => true,
         'cookie_samesite' => 'Lax',
-        // 'cookie_secure' => true, // enable only if you serve over HTTPS
+
     ]);
 }
 
@@ -14,17 +15,21 @@ if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(24));
 }
 
-function csrf_token(): string {
+function csrf_token(): string
+{
     return $_SESSION['csrf'];
 }
-function csrf_input(): string {
+function csrf_input(): string
+{
     return '<input type="hidden" name="csrf" value="' .
         htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') . '">';
 }
-function csrf_check(string $t): bool {
+function csrf_check(string $t): bool
+{
     return hash_equals($_SESSION['csrf'] ?? '', $t);
 }
-function require_post_with_csrf(): void {
+function require_post_with_csrf(): void
+{
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
         header('Content-Type: application/json');

@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>calender_page</title>
+	
+	<style>
+		body {
+			font-family:Arial, Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+			
+			flex-direction:column;
+			align-items: center;
+			margin: 20px;
+		}
+		.calender{
+			display:grid;
+			grid-template-columns: repeat(7,1fr);
+			gap:5px;
+			max-width: 600px;
+			align-content: center;
+		}
+		.day{
+			border:1px solid #CCC;
+			padding: 10px;
+			min-height: 80px;
+			cursor: pointer;
+			position:relative;
+		}
+		
+		.day:hover {
+			background:#f0f0f0;
+		}
+		.note {
+			font-size: 12px;
+			margin-top: 5px;
+			color:#485FCB;
+		}
+		.modal.active{
+			display:none;
+			position:fixed;
+			top:50%; left 50%;
+			transform: translate(-50%, -50%);
+			background:white;
+			padding:20px;
+			border:1px solid;
+			box-shadow:0 0 10px rgba(0,0,0,0,0.3);
+		}
+		modal.active{
+			display:block;
+		}
+	
+	.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #C6C7EB;
+  padding: 10px 20px;
+  border-bottom: 2px solid #003366;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 80px;
+  height: 50px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #003366;
+}
+
+.header p {
+  font-size: 12px;
+  color: #666;
+}
+
+.logout {
+  text-decoration: none;
+  background: #003366;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+	.footer {
+  text-align: center;
+  padding: 15px;
+  background: #979AEF;
+  color: #020202;
+  font-size: 14px;
+}
+
+	
+	</style>
+</head>
+
+<body>
+	  <header class="header">
+    <div class="header-left">
+      <img src="../../../../../../Users/user/Downloads/333-3336215_ministry-of-agriculture-water-and-forestry-namibia-republic-of-namibia-removebg-preview.png" alt="Namibia Logo" class="logo">
+      <div>
+        <h1>MHSS</h1>
+        <h4>Patient's Dashboard</h4>
+      </div>
+    </div>
+    <a href="#" class="logout">Log Out</a>
+  </header>
+
+	<h1>Calender</h1>
+	<div class="calender" id="calender"></div>
+	
+	<div class="modal" id="noteModal">
+	<h3 id="selectedDate"></h3>
+	<textarea id="noteInput" rows="4" cols="30" placeholder="Write your note here..."></textarea><br><br>
+		
+		<button onclick="saveNote()">SAVE</button>
+		<button onclick="closeModal()">CLOSE</button>
+	</div>
+	
+	<script>
+	const calender = document.getElementById("calender");
+	const noteModal = document.getElementById("noteModal");
+	const selectedDateE1 = document.getElementById("selectedDate");
+	const noteInput = document.getElementById("noteInput");
+	
+	let selectedDay = null;
+		let notes = JSON.parse(localStorage.getItem("calenderNotes")) || {};
+	
+	
+	const today = new Date();
+		const year = today.getFullYear();
+		const month = today.getMonth();
+		const firstDay = new Date(year,month, 1).getDay();
+		const daysInMonth = new Date(year,month + 1, 0).getDate();
+	
+	
+	
+		for(let i = 0;i < firstDay; i++) {
+			const blank = document.createElement("div");
+			calender.appendChild(blank);
+		}
+		
+		for(let day = 1;day <= daysInMonth; day++) {
+			const dayE1 = document.createElement("div");
+			dayE1.classList.add("day");
+			dayE1.innerHTML = `<strong>${day}</strong>`;
+			
+			
+			const key = `${year}-${month + 1}-${day}`;
+			if(notes[key]) {
+				const note = document.createElement("div");
+				note.classList.add("note");
+				note.innerText = notes[key];
+				dayE1.appendChild(note);
+			}
+			
+			dayE1.onclick = () => openModal(key,day);
+			calender.appendChild (dayE1);
+		}
+		
+		function openModal(key, day){selectedDay = key;
+		selectedDateE1.innerText = `Notes for ${key}`;
+									 noteInput.value = notes[key]  || "";
+		noteModal.classList.add("active");
+									}
+		function closeModal(){
+			noteModal.classList.remove("active");
+		}
+		function saveNote(){
+			if(noteInput.value.trim()!==""){
+				notes[selectedDay] = noteInput.value;
+			} else {
+				delete notes[selectedDay];
+			}
+			localStorage.setItem("calenderNotes",JSON.stringify(notes));
+			location.reload();
+		}
+	</script>
+	
+	<footer class="footer">
+    <p>Ministry of Health &amp; Social Services © 2025 | Patient Dashboard</p>
+  </footer>
+</body>
+</html>

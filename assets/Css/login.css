@@ -1,0 +1,24 @@
+  
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+    body{ font-family: "Times New Roman", Georgia, serif; background: #ffffff; display: flex; align-items: center; justify-content: center; padding: 30px; }
+    .card { width: 920px; max-width: 95vw; height: 520px; border-radius: 24px; border: 6px solid #2b5a89; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.08); display: flex; }
+    .left { width: 52%; min-width: 420px; background: radial-gradient(circle at 30% 60%, #2a5d92 0%, #1e3a62 40%, #133353 100%); color: #fff; padding: 36px 30px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; border-top-left-radius: 18px; border-bottom-left-radius: 18px; }
+    .crest { width: 86px; height: 86px; margin-top: 12px; object-fit: contain; border-radius: 6px; background: transparent; }
+    .title { margin-top: 30px; text-align: center; line-height: 1.25; }
+    .title h1 { font-size: 20px; font-weight: 700; margin-bottom: 18px; letter-spacing: 0.6px; color: #fff; }
+    .title .big { font-size: 20px; font-weight: 700; margin: 6px 0; text-transform: uppercase; }
+    .title .medium { font-size: 16px; font-weight: 600; margin: 6px 0; text-transform: uppercase; }
+    .right { width: 48%; background: #fff; padding: 46px 48px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; position: relative; }
+    .right h2 { font-size: 20px; font-weight: 600; margin-bottom: 28px; color: #222; }
+    form { width: 100%; max-width: 320px; }
+    label { display: block; font-size: 13px; margin-bottom: 6px; color: #222; }
+    input[type="email"], input[type="password"]{ width: 100%; padding: 10px 12px; border: 1px solid #bdbdbd; border-radius: 2px; outline: none; font-size: 14px; margin-bottom: 18px; }
+    input[type="email"]:focus, input[type="password"]:focus { border-color: #2b5a89; box-shadow: 0 0 0 3px rgba(43,90,137,0.07); }
+    .login-btn { display: inline-block; width: 120px; text-align: center; padding: 8px 0; margin: 8px 0 22px; border-radius: 24px; background-color: #2b5a89; color: #fff; font-weight: 700; text-decoration: none; border: none; cursor: pointer; font-size: 13px; letter-spacing: 0.6px; }
+    .login-btn:hover { background-color: #1b3f65; }
+    .spacer { height: 6px; }
+    .create { margin-top: 26px; text-align: center; font-size: 14px; color: #222; cursor: pointer; text-decoration: none; }
+    @media (max-width: 900px) { .card { flex-direction: column; width: 92vw; height: auto; } .left, .right { width: 100%; min-width: 0; } .left { padding: 24px; } .right { padding: 28px; } .right h2 { margin-top: 6px; } }
+  

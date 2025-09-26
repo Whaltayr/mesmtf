@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prescriptions_page</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+	  /*  Heading  */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #C6C7EB;
+  padding: 10px 20px;
+  border-bottom: 2px solid #003366;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #003366;
+}
+
+.header p {
+  font-size: 12px;
+  color: #666;
+}
+
+.logout {
+  text-decoration: none;
+  background: #003366;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+    body {
+      
+      background: #f9f9f9;
+    }
+
+    /* Sidebar */
+  .sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 150
+	  px;
+  height: calc(100% - 120px);
+  background:     #C6C7EB;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar img {
+  width: 30px;
+  height: 30px;
+	
+}
+
+.sidebar .profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #003366;
+}
+
+    /* Topbar */
+    .topbar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .logout {
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      color: #1d3b72;
+    }
+
+    /* Main Card */
+    .main-card {
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      width: 75%;
+      border-radius: 20px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      border: 4px solid #ccc;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .search-box input {
+      padding: 8px 15px;
+      border: 1px solid #999;
+      border-radius: 15px;
+      outline: none;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .section .view-all {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 14px;
+      color: black;
+      text-decoration: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 120px);
+      gap: 15px;
+    }
+
+    .file-box {
+      background: linear-gradient(135deg, #e6f0ff, #4a74c9);
+      color: white;
+      font-size: 32px;
+      text-align: center;
+      padding: 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .file-box:hover {
+      background: linear-gradient(135deg, #4a74c9, #2b4c87);
+      transform: scale(1.05);
+		
+		
+    }
+	  
+	  .footer {
+  text-align: center;
+  padding: 15px;
+  background: #979AEF;
+  color: #020202;
+  font-size: 14px;
+}
+
+  </style>
+</head>
+<body>
+	
+	<header class="header">
+    <div class="header-center">
+      <img src="file:///D|/Pages Codes/doctors_dashboard/project-images/national-symbols-namibian-coat-of-arms-hd-png.png" alt="Namibia Logo" class="logo">
+      <div>
+        <h1>MHSS</h1>
+        <h3>Patient Dashboard</h3>
+      </div>
+    </div>
+    <div class="topbar">
+    <a href="#" class="logout">Log Out</a>
+  </div>
+	
+  </header>
+
+<section>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <ul>
+      <li><a href="../Web Pages/patient/patient_dashboard.html"><img src="../../../../../../Users/user/Downloads/home.png" alt="Home"></a></li>
+      <li><a href="#"><img src="../../../../../../Users/user/Downloads/bell.png" alt="Notifications"></a></li>
+      <li><a href="#"><img src="../../../../../../Users/user/Downloads/search.png" alt="Search"></a></li>
+      <li><a href="#"><img src="../../../../../../Users/user/Downloads/setting.png" alt="Settings"></a></li>
+      <li class="profile">
+        <img src="../../../../../../Users/user/Downloads/Doctor.jpg" alt="Doctor">
+      </li>
+    </ul>
+  </aside>
+</section>
+	
+  
+  
+	
+	
+
+  <!-- Main Content -->
+  <div class="main-card">
+    <div class="search-box">
+      <input type="text" placeholder="Search..">
+    </div>
+
+    <!-- Latest Prescriptions -->
+    <div class="section">
+      <h2>View Latest Prescriptions</h2>
+      <a href="#" class="view-all">View All</a>
+      <div class="grid">
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/prescription1.pdf" download class="file-box">⬇</a>
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/prescription2.pdf" download class="file-box">⬇</a>
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/prescription3.pdf" download class="file-box">⬇</a>
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/prescription4.pdf" download class="file-box">⬇</a>
+      </div>
+    </div>
+
+    <!-- Earlier Prescriptions -->
+    <div class="section">
+      <h2>View Earlier Prescriptions</h2>
+      <a href="#" class="view-all">View All</a>
+      <div class="grid">
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/old1.pdf" download class="file-box">⬇</a>
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/old2.pdf" download class="file-box">⬇</a>
+        <a href="file:///D|/Pages Codes/doctors_dashboard/files/old3.pdf" download class="file-box">⬇</a>
+      </div>
+    </div>
+  </div>
+
+	
+	<footer class="footer">
+    <p>Ministry of Health &amp; Social Services</p>
+  </footer>
+	
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+auth is done - ok
+search is done - ok
+appointents - ok
+diagnosis - ok
+most of the screans are done- good

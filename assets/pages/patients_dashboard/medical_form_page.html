@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #C6C7EB;
+  padding: 10px 20px;
+  border-bottom: 2px solid #003366;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 80px;
+  height: 50px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #003366;
+}
+
+.header p {
+  font-size: 12px;
+  color: #666;
+}
+
+.logout {
+  text-decoration: none;
+  background: #003366;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+		
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 200px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+        
+        .emergency-contact, .insurance-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+            
+            .col {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+		.footer {
+  text-align: center;
+  padding: 15px;
+  background: #979AEF;
+  color: #020202;
+			font-size: 14px;}
+			
+			p{width: 250px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MEDICAL RECORD</h1>
+        
+		<header class="header">
+    <div class="header-left">
+      <img src="../../../../../Users/user/Downloads/333-3336215_ministry-of-agriculture-water-and-forestry-namibia-republic-of-namibia-removebg-preview.png" alt="Namibia Logo" class="logo"><a href="../Web Pages/patient/patient_dashboard.html"><img src="../../../../../Users/user/Downloads/home.png" alt="Home" width="51" height="44"></a>
+      <div>
+        <h1>MHSS</h1>
+        <h4>Patient's Dashboard</h4>
+      </div>
+    </div>
+
+    <a href="#" class="logout">Log Out</a>
+  </header>
+		
+        <form id="medicalForm">
+           
+			
+  <div class="section">
+   <h2>PATIENT INFORMATION</h2>
+    <div class="row">
+     <div class="col">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+         <input type="text" id="firstName" required>
+      </div>
+        </div>
+        <div class="col">
+        <div class="form-group">
+           <label for="lastName">Last Name</label>
+           <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+     <label for="preferredName">Preferred Name</label>
+      <input type="text" id="preferredName">
+                        </div>
+                    </div>
+       <div class="col">
+      <div class="form-group">
+     <label for="patientId">Patient Identifier</label>
+     <input type="text" id="patientId" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+      <label for="gender">Gender</label>
+       <select id="gender" required>
+         <option value="">Select</option>
+         <option value="male">Male</option>
+         <option value="female">Female</option>
+         <option value="other">Other</option>
+         <option value="preferNotToSay">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="bloodType">Blood Type</label>
+                            <select id="bloodType" required>
+      <option value="">Select</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+          <div class="form-group">
+        <label for="lastUpdated">Last Updated Date</label>
+         <input type="date" id="lastUpdated" required>
+                        </div>
+                    </div>
+                </div>
+                
+         <div class="row">
+         <div class="col">
+         <div class="form-group">
+         <label for="address">Address</label>
+         <input type="text" id="address" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" required>
+                        </div>
+                    </div>
+          <div class="col">
+          <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" id="state" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+          <label for="zipCode">Zip Code</label>
+          <input type="text" id="zipCode" required>
+                        </div>
+                    </div>
+                </div>
+          </div>
+            
+            <!-- EMERGENCY CONTACT SECTION -->
+            <div class="section">
+                <h2>EMERGENCY CONTACT</h2>
+                
+                <div class="emergency-contact">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+              <label for="ec1Name">Full Name</label>
+              <input type="text" id="ec1Name">
+                            </div>
+                        </div>
+                        <div class="col">
+              <div class="form-group">
+             <label for="ec1Relationship">Relationship</label>
+              <input type="text" id="ec1Relationship">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+            <label for="ec1Contact">Contact Number</label>
+           <input type="tel" id="ec1Contact">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+          <div class="emergency-contact">
+          <div class="row">
+          <div class="col">
+        <div class="form-group">
+        <label for="ec2Name">Full Name</label>
+       <input type="text" id="ec2Name">
+                            </div>
+                        </div>
+       <div class="col">
+       <div class="form-group">
+      <label for="ec2Relationship">Relationship</label>
+      <input type="text" id="ec2Relationship">
+                            </div>
+                        </div>
+                        <div class="col">
+      <div class="form-group">
+      <label for="ec2Contact">Contact Number</label>
+      <input type="tel" id="ec2Contact">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+         
+      <div class="section">
+       <h2>INSURANCE INFORMATION</h2>
+                
+       <div class="insurance-info">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+       <label for="insuranceCarrier">Insurance Carrier</label>
+       <input type="text" id="insuranceCarrier">
+                            </div>
+                        </div>
+       <div class="col">
+      <div class="form-group">
+      <label for="insurancePlan">Insurance Plan</label>
+      <input type="text" id="insurancePlan">
+                            </div>
+                        </div>
+                        <div class="col">
+     <div class="form-group">
+     <label for="insuranceContact">Contact Number</label>
+     <input type="tel" id="insuranceContact">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">
+          <div class="form-group">
+        <label for="policyNumber">Policy Number</label>
+        <input type="text" id="policyNumber">
+                            </div>
+                        </div>
+        <div class="col">
+        <div class="form-group">
+       <label for="groupNumber">Group Number</label>
+       <input type="text" id="groupNumber">
+                            </div>
+                        </div>
+       <div class="col">
+                            <div class="form-group">
+       <label for="ssn">Social Security Number</label>
+       <input type="text" id="ssn">
+       </div>
+       </div>
+        </div>
+        </div>
+        </div>
+            
+    
+     <div class="section">
+    <h2>HEALTH INFORMATION</h2>
+    <h3>PHYSICIAN INFORMATION</h3>
+                
+                <table>
+    <thead>
+                        <tr>
+   <th>Name</th>
+   <th>Speciality</th>
+   <th>Phone</th>
+   <th>Address</th>
+   <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+   <td><input type="text" placeholder="Physician Name"></td>
+   <td><input type="text" placeholder="Speciality"></td>
+   <td><input type="tel" placeholder="Phone"></td>
+   <td><input type="text" placeholder="Address"></td>
+   <td><input type="text" placeholder="Notes"></td>
+                        </tr>
+                        <tr>
+   <td><input type="text" placeholder="Physician Name"></td>
+   <td><input type="text" placeholder="Speciality"></td>
+   <td><input type="tel" placeholder="Phone"></td>
+   <td><input type="text" placeholder="Address"></td>
+   <td><input type="text" placeholder="Notes"></td>
+                        </tr>
+       </tbody>
+      </table>
+     </div>
+            
+  
+   <div class="section">
+   <h2>KNOWN MEDICAL CONDITIONS</h2>
+   <div class="form-group">
+   <textarea id="medicalConditions" rows="4" style="width: 100%; padding: 10px;"></textarea>
+    </div>
+     </div>
+            
+        
+      <div class="section">
+      <h2>ALLERGIES</h2>
+      <div class="form-group">
+      <textarea id="allergies" rows="4" style="width: 100%; padding: 10px;"></textarea>
+                </div>
+            </div>
+            
+      
+     <div class="btn-container">
+      <button type="button" id="saveBtn">SAVE</button>
+      </div>
+      </form>
+</div>
+
+    <script>
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            // Basic validation
+            const requiredFields = document.querySelectorAll('input[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#bdc3c7';
+                }
+            });
+            
+            if (isValid) {
+                alert('Medical records saved successfully!');
+                // In a real application, you would send the data to a server here
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+        
+        // Set today's date as the default for last updated
+        document.getElementById('lastUpdated').valueAsDate = new Date();
+    </script>
+	
+	<footer class="footer">
+    <p>Ministry of Health &amp; Social Services © 2025 | Patient Dashboard</p>
+  </footer>
+</body>
+</html>

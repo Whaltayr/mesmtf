@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book an Appointment</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: #f9f9f9;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 80px;
+      background: #fff;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .sidebar .logo {
+      width: 50px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      margin: 20px 0;
+      font-size: 22px;
+      color: #1d3b72;
+    }
+
+    .sidebar .profile-pic {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      margin-top: auto;
+      border: 2px solid #1d3b72;
+    }
+
+    /* Top bar */
+    .topbar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .logout {
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      color: #1d3b72;
+    }
+
+    /* Main content */
+    .main-content {
+      margin: 40px auto;
+      width: 85%;
+      text-align: center;
+    }
+
+    .main-content h1 {
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    /* Appointment Type */
+    .appointment-type {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .appointment-type label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .appointment-type select {
+      width: 280px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      font-size: 15px;
+    }
+
+    /* Calendar */
+    .calendar {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .calendar-header {
+      background: #1d3b72;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .calendar table {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+
+    .calendar th,
+    .calendar td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      width: 45px;
+    }
+
+    .calendar td.active {
+      background: #1d3b72;
+      color: white;
+      border-radius: 50%;
+    }
+
+    /* Time Slots */
+    .time-slots {
+      margin: 20px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 120px);
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .time-slots button {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .time-slots button:hover,
+    .time-slots button.active {
+      background: #1d3b72;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Clinician Search */
+    .clinicians {
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      width: 350px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .clinicians h3 {
+      margin-bottom: 12px;
+    }
+
+    .clinicians .search-row {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .clinicians input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #999;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .clinicians button {
+      padding: 8px 12px;
+      border: none;
+      background: #1d3b72;
+      color: white;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+    .clinician-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .clinician-card span {
+      font-size: 14px;
+    }
+
+    .clinician-card .btn {
+      padding: 6px 10px;
+      background: #1d3b72;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* Book Button */
+    .book-btn {
+      margin-top: 30px;
+      padding: 12px 40px;
+      border-radius: 25px;
+      border: 1px solid #1d3b72;
+      background: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .book-btn:hover {
+      background: #1d3b72;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="logo.png" alt="Logo" class="logo">
+    <a href="#">🏠</a>
+    <a href="#">🔔</a>
+    <a href="#">🔍</a>
+    <a href="#">⚙️</a>
+    <img src="profile.jpg" alt="Profile" class="profile-pic">
+  </div>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <a href="#" class="logout">Log Out</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>BOOK AN APPOINTMENT</h1>
+
+    <!-- Appointment Type -->
+    <div class="appointment-type">
+      <label>Select appointment type</label>
+      <select>
+        <option>Emergency visit</option>
+        <option selected>Specialist consultation</option>
+        <option>Telehealth consultations</option>
+        <option>Regular Check-Up</option>
+      </select>
+    </div>
+
+    <!-- Calendar -->
+    <div class="calendar">
+      <div class="calendar-header">Sept 2025</div>
+      <table>
+        <tr>
+          <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
+        </tr>
+        <tr>
+          <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
+        </tr>
+        <tr>
+          <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
+        </tr>
+        <tr>
+          <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td class="active">19</td><td>20</td>
+        </tr>
+        <tr>
+          <td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
+        </tr>
+        <tr>
+          <td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Time Slots -->
+    <div class="time-slots">
+      <button>8:00 am</button>
+      <button>8:30 am</button>
+      <button>9:00 am</button>
+      <button>9:30 am</button>
+      <button>10:00 am</button>
+      <button>10:30 am</button>
+      <button>11:00 am</button>
+      <button>11:30 am</button>
+      <button class="active">12:00 pm</button>
+      <button>12:30 pm</button>
+      <button>2:00 pm</button>
+      <button>2:30 pm</button>
+    </div>
+
+    <!-- Clinicians -->
+    <div class="clinicians">
+      <h3>Search Clinicians</h3>
+      <div class="search-row">
+        <input type="text" placeholder="search by name...">
+        <button>SEARCH</button>
+      </div>
+
+      <div class="clinician-card">
+        <span>Dr. John Doe <br> <small>ID: 6</small></span>
+        <button class="btn">SEARCH</button>
+      </div>
+      <div class="clinician-card">
+        <span>Josivaldo Vasconcelos <br> <small>ID: 1</small></span>
+        <button class="btn">SEARCH</button>
+      </div>
+      <div class="clinician-card">
+        <span>Joel Carvalho <br> <small>ID: 5</small></span>
+        <button class="btn">SEARCH</button>
+      </div>
+      <div class="clinician-card">
+        <span>Dr. Brown Mbongo <br> <small>ID: 8</small></span>
+        <button class="btn">SEARCH</button>
+      </div>
+    </div>
+
+    <!-- Book Button -->
+    <button class="book-btn">BOOK</button>
+  </div>
+
+</body>
+</html>

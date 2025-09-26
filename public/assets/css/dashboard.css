@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f5f4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/*  Heading  */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #c6c7eb;
+  padding: 10px 20px;
+  border-bottom: 2px solid #003366;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 80px;
+  height: 50px;
+}
+
+
+.header-search input[type="search"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cfcfe6;
+  outline: none;
+  background: #fff;
+}
+.header-search select,
+.header-search button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cfcfe6;
+  background: #fff;
+}
+.search-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58px;
+  z-index: 60;
+  background: #fff;
+  border: 1px solid #e6e6f0;
+  box-shadow: 0 10px 30px rgba(20, 20, 40, 0.06);
+  border-radius: 8px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 10px;
+}
+.search-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  border: 1px solid #f0f0f6;
+  background: #fff;
+}
+.search-card .meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.search-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2ff;
+  color: #123;
+  font-weight: 600;
+}
+.search-card .info {
+  display: flex;
+  flex-direction: column;
+}
+.search-card .info .title {
+  font-weight: 600;
+  color: #0b2a4a;
+}
+.search-card .info .sub {
+  font-size: 13px;
+  color: #666;
+}
+.search-card .btn,
+.search-card a.btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 0;
+  background: #2b5a89;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+.search-empty {
+  padding: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.logout {
+  text-decoration: none;
+  background: #003366;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/*  Sidebar */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 200px;
+  height: calc(100% - 120px);
+  background: #c6c7eb;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar img {
+  width: 30px;
+  height: 30px;
+}
+
+.sidebar .profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #003366;
+}
+
+/*  Dashboard  */
+.dashboard {
+  margin-left: 220px;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+.card > a {
+text-decoration: none;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.patient-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.patient-list img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.see-all {
+  padding: 8px 14px;
+  background: #002953;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/*  Footer  */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: #979aef;
+  color: #020202;
+  font-size: 14px;
+}
+
+/* Page Responses  */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .dashboard {
+    margin-left: 0;
+  }
+}

@@ -21,11 +21,12 @@ function json_err(string $msg, int $code = 400, array $extra = []): void
     echo json_encode(['ok' => false, 'error' => $msg, 'extra' => $extra]);
     exit;
 }
-function redirect_with_msg(string $to, string $msg = '' , string $err = '') : void   {
+function redirect_with_msg(string $to, string $msg = '', string $err = ''): void
+{
     $q = [];
-    if($msg != '')$q['msg'] = $msg;
-    if($err != '')$q['err'] = $err;
-    $qs = $q ? ('?'.http_build_query($q)): '';
+    if ($msg != '') $q['msg'] = $msg;
+    if ($err != '') $q['err'] = $err;
+    $qs = $q ? ('?' . http_build_query($q)) : '';
     header("Location: {$to}{$qs}");
     exit;
 }
