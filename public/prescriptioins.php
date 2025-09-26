@@ -32,7 +32,6 @@ if (!function_exists('set_flash')) {
         return $f;
     }
 }
-
 function ensure_csrf_or_die(array $p)
 {
     if (!csrf_check($p['csrf'] ?? '')) throw new RuntimeException('CSRF fail');
@@ -44,15 +43,15 @@ $user_id = (int)($_SESSION['user_id'] ?? 0);
 function is_doctor(int $r): bool
 {
     return $r === 4;
-}          // adjust if ur doctor role differs
+}      // tweak if ur ids differ
 function is_patient_role(int $r): bool
 {
     return $r === 3;
-}     // adjust if ur patient role differs
+}
 
 $flash = null;
 
-// try map patient profile for this login (patient-only view)
+// map current user to patient (for patient view)
 $logged_patient_id = null;
 if ($user_id > 0) {
     try {
@@ -60,7 +59,6 @@ if ($user_id > 0) {
         $q->execute([$user_id]);
         $logged_patient_id = (int)($q->fetchColumn() ?: 0);
     } catch (Throwable $e) {
-        // meh
     }
 }
 
@@ -73,6 +71,10 @@ try {
             if (!is_doctor($role_id)) throw new RuntimeException('Only doctors can create');
 
             $patient_id = (int)($_POST['patient_id'] ?? 0);
+            $appointment_id = trim((string)($_POST['appointment_id'] ?? ''));
+            $appointment_id = ($appointment_id === '') ? null : max(0, (int)$appointment_id);
+            $notes = trim((string)($_POST['notes'] ?? ''));
+
             $item_drug = $_POST['drug_id'] ?? [];
             $item_qty  = $_POST['quantity'] ?? [];
             $item_dose = $_POST['dosage'] ?? [];
@@ -96,10 +98,20 @@ try {
 
             $pdo->beginTransaction();
             try {
-                $pdo->prepare("INSERT INTO prescriptions (patient_id, doctor_id, status, created_at) VALUES (?, ?, 'pending', NOW())")
-                    ->execute([$patient_id, $doctor_id]);
+                // insert matches table cols exactly
+                $stmt = $pdo->prepare("
+          INSERT INTO prescriptions (patient_id, doctor_id, appointment_id, notes, status, created_at)
+          VALUES (?, ?, ?, ?, 'pending', NOW())
+        ");
+                $stmt->execute([
+                    $patient_id,
+                    $doctor_id,
+                    $appointment_id ?: null,
+                    ($notes !== '') ? $notes : null
+                ]);
                 $prescription_id = (int)$pdo->lastInsertId();
 
+                // items (assuming you have prescription_items)
                 $ins = $pdo->prepare("INSERT INTO prescription_items (prescription_id, drug_id, quantity, dosage) VALUES (?, ?, ?, ?)");
                 foreach ($items as $it) {
                     $ins->execute([$prescription_id, $it['drug_id'], $it['qty'], $it['dosage'] !== '' ? $it['dosage'] : null]);
@@ -122,26 +134,26 @@ try {
     $flash = 'Error: ' . ($e->getMessage() ?: 'failed');
 }
 
-// load dropdown data
+// dropdown lists
 try {
     $patients = $pdo->query("SELECT id, first_name, last_name FROM patients ORDER BY last_name, first_name LIMIT 500")->fetchAll();
     $drugs = $pdo->query("SELECT id, code, name, stock, unit FROM drugs ORDER BY name")->fetchAll();
 } catch (Throwable $e) {
     $patients = [];
     $drugs = [];
-    error_log('RX LOAD lists: ' . $e->getMessage());
-    $flash = $flash ?? 'Failed loading dropdowns';
+    error_log('RX lists: ' . $e->getMessage());
+    $flash = $flash ?? 'Failed loading lists';
 }
 
-// list prescriptions per role
+// recents per role
 $recent = [];
 $rxItemsByRx = [];
 
 try {
     if (is_doctor($role_id)) {
-        // doctor sees own recent
         $st = $pdo->prepare("
-      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.status, pr.created_at,
+      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.appointment_id, pr.notes,
+             pr.status, pr.created_at,
              p.first_name, p.last_name
       FROM prescriptions pr
       JOIN patients p ON p.id = pr.patient_id
@@ -152,9 +164,9 @@ try {
         $st->execute([$user_id]);
         $recent = $st->fetchAll();
     } elseif (is_patient_role($role_id) && $logged_patient_id) {
-        // patient sees only their own
         $st = $pdo->prepare("
-      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.status, pr.created_at,
+      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.appointment_id, pr.notes,
+             pr.status, pr.created_at,
              p.first_name, p.last_name
       FROM prescriptions pr
       JOIN patients p ON p.id = pr.patient_id
@@ -165,9 +177,9 @@ try {
         $st->execute([$logged_patient_id]);
         $recent = $st->fetchAll();
     } else {
-        // others (admin etc) see latest
         $recent = $pdo->query("
-      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.status, pr.created_at,
+      SELECT pr.id AS prescription_id, pr.patient_id, pr.doctor_id, pr.appointment_id, pr.notes,
+             pr.status, pr.created_at,
              p.first_name, p.last_name
       FROM prescriptions pr
       JOIN patients p ON p.id = pr.patient_id
@@ -194,8 +206,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    error_log('RX LOAD lists2: ' . $e->getMessage());
-    // carry on
+    error_log('RX recents: ' . $e->getMessage());
 }
 
 $csrf = csrf_token();
@@ -305,6 +316,10 @@ $csrf = csrf_token();
             font-size: 14px;
         }
 
+        textarea {
+            min-height: 70px;
+        }
+
         .items {
             margin-top: 6px;
             display: flex;
@@ -349,6 +364,7 @@ $csrf = csrf_token();
             border-radius: 8px;
             padding: 8px;
             background: #fbfdff;
+            margin-bottom: 10px;
         }
 
         table {
@@ -367,6 +383,14 @@ $csrf = csrf_token();
         .muted {
             color: var(--muted);
             font-size: 13px;
+        }
+
+        .meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: var(--muted);
         }
 
         @media (max-width: 900px) {
@@ -412,7 +436,14 @@ $csrf = csrf_token();
                                     <?php endforeach; ?>
                                 </select>
                             </label>
+                            <label>Appointment id (opt)
+                                <input name="appointment_id" type="number" min="1" step="1" placeholder="e.g. 123">
+                            </label>
                         </div>
+
+                        <label>Notes (opt)
+                            <textarea name="notes" placeholder="notes about rx"></textarea>
+                        </label>
 
                         <div id="items" class="items">
                             <div class="rx-item">
@@ -449,7 +480,16 @@ $csrf = csrf_token();
                 <?php else: ?>
                     <?php foreach ($recent as $r): ?>
                         <div class="rx-card">
-                            <div><strong>#<?= (int)$r['prescription_id'] ?></strong> • <?= h($r['last_name'] . ', ' . $r['first_name']) ?> • <?= h($r['status']) ?> • <?= h($r['created_at']) ?></div>
+                            <div><strong>#<?= (int)$r['prescription_id'] ?></strong> • <?= h($r['last_name'] . ', ' . $r['first_name']) ?> • <?= h($r['status']) ?></div>
+                            <div class="meta">
+                                <span>patient_id: <?= (int)$r['patient_id'] ?></span>
+                                <span>doctor_id: <?= (int)$r['doctor_id'] ?></span>
+                                <span>appointment_id: <?= $r['appointment_id'] !== null ? (int)$r['appointment_id'] : 'NULL' ?></span>
+                                <span>created_at: <?= h($r['created_at']) ?></span>
+                            </div>
+                            <?php if ($r['notes'] !== null && $r['notes'] !== ''): ?>
+                                <div class="muted">notes: <?= h($r['notes']) ?></div>
+                            <?php endif; ?>
                             <?php $its = $rxItemsByRx[(int)$r['prescription_id']] ?? []; ?>
                             <?php if ($its): ?>
                                 <table>
@@ -481,7 +521,7 @@ $csrf = csrf_token();
     </div>
 
     <script>
-        // tiny add/remove rows, no fancy stuff
+        // add/remove rows. simple, dont overthink
         const addBtn = document.getElementById('addItem');
         const itemsWrap = document.getElementById('items');
 

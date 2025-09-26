@@ -173,8 +173,10 @@ if ($q !== '') {
     </section>
 
     <section class="card small">
-      <h3>Treatment</h3>
-      <img src="assets/img/treatment.webp" alt="Calendar">
+      <a href="treatment.php">
+        <h3>Treatment</h3>
+        <img src="assets/img/treatment.webp" alt="Calendar">
+      </a>
     </section>
 
 

@@ -111,6 +111,82 @@ if ($action === 'cancel') {
 if (true) {
     $sql = "SELECT * FROM appointments WHERE status = 'booked'";
 }
+// POST /doctor/api/appointments.php (action=update)
+if ($action === 'update') {
+    require_post_with_csrf();
+
+    $id       = (int)($_POST['id'] ?? 0);
+    $date     = trim($_POST['date'] ?? '');
+    $time     = trim($_POST['time'] ?? '');
+    $duration = max(1, min(480, (int)($_POST['duration_minutes'] ?? 15)));
+
+    if ($id <= 0 || $date === '' || $time === '') {
+        redirect_with_msg('/doctor/public/appointments.php', '', 'Invalid input.');
+    }
+
+    // Monta novo datetime e valida horário (06:00–20:59 como no book)
+    $dt = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $time);
+    if (!$dt) redirect_with_msg('/doctor/public/appointments.php', '', 'Invalid date/time.');
+    $hour = (int)$dt->format('H');
+    if ($hour < 6 || $hour > 20) redirect_with_msg('/doctor/public/appointments.php', '', 'Outside hours (06:00-20:59).');
+
+    // Carrega appointment
+    $st = $pdo->prepare("SELECT id, doctor_id, status FROM appointments WHERE id=?");
+    $st->execute([$id]);
+    $row = $st->fetch();
+    if (!$row) redirect_with_msg('/doctor/public/appointments.php', '', 'Appointment not found.');
+
+    // Segurança: se for médico (role_id=4), só pode editar os próprios
+    $meRole = (int)($_SESSION['role_id'] ?? 0);
+    $meId   = (int)($_SESSION['user_id'] ?? 0);
+    if ($meRole === 4 && (int)$row['doctor_id'] !== $meId) {
+        redirect_with_msg('/doctor/public/appointments.php', '', 'Not allowed.');
+    }
+
+    $newStart = $dt->format('Y-m-d H:i:00');
+
+    try {
+        $upd = $pdo->prepare("UPDATE appointments
+                              SET scheduled_at=?, duration_minutes=?
+                              WHERE id=?");
+        $upd->execute([$newStart, $duration, $id]);
+        redirect_with_msg('/doctor/public/appointments.php', 'Appointment updated.');
+    } catch (Throwable $e) {
+        // Pode falhar por conflito do unique(doctor_id, scheduled_at)
+        error_log($e->getMessage());
+        redirect_with_msg('/doctor/public/appointments.php', '', 'Slot unavailable or error.');
+    }
+}
+
+// POST /doctor/api/appointments.php (action=delete)
+if ($action === 'delete') {
+    require_post_with_csrf();
+
+    $id = (int)($_POST['id'] ?? 0);
+    if ($id <= 0) redirect_with_msg('/doctor/public/appointments.php', '', 'Invalid id.');
+
+    // Carrega appointment
+    $st = $pdo->prepare("SELECT id, doctor_id FROM appointments WHERE id=?");
+    $st->execute([$id]);
+    $row = $st->fetch();
+    if (!$row) redirect_with_msg('/doctor/public/appointments.php', '', 'Appointment not found.');
+
+    // Segurança: se for médico, só pode apagar os próprios
+    $meRole = (int)($_SESSION['role_id'] ?? 0);
+    $meId   = (int)($_SESSION['user_id'] ?? 0);
+    if ($meRole === 4 && (int)$row['doctor_id'] !== $meId) {
+        redirect_with_msg('/doctor/public/appointments.php', '', 'Not allowed.');
+    }
+
+    try {
+        $del = $pdo->prepare("DELETE FROM appointments WHERE id=?");
+        $del->execute([$id]);
+        redirect_with_msg('/doctor/public/appointments.php', 'Appointment deleted.');
+    } catch (Throwable $e) {
+        error_log($e->getMessage());
+        redirect_with_msg('/doctor/public/appointments.php', '', 'Failed to delete.');
+    }
+}
 
 
 json_err('Unknown action', 400);
